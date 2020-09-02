@@ -9,46 +9,23 @@
 import SwiftUI
 
 struct ImageList: View {
+    @ObservedObject var viewModel: ImageListViewModel
     @State public var userQuery = ""
-    @EnvironmentObject var userData: UserData
-    let numColumns: Int = Int(UIScreen.main.bounds.width / 120)
     
-    
-    init() {
-         UITableView.appearance().separatorStyle = .none
+    init(viewModel: ImageListViewModel) {
+        self.viewModel = viewModel
+        UITableView.appearance().separatorStyle = .none
     }
     
     var body: some View {
         NavigationView {
             VStack {
                 TextField("Search", text: $userQuery, onCommit: {
-                    DispatchQueue.global(qos: .background).async {
-                        let newImagesList = scrape(query: self.userQuery)
-                        let numRows: Int = Int(ceil(Double(newImagesList.count) / Double(self.numColumns)))
-                        
-                        var newImagesGrid = [[IdentifiableImage]]()
-                        for row in 0..<numRows {
-                            newImagesGrid.append([IdentifiableImage]())
-                            for column in 0..<self.numColumns {
-                                let imageIndexInList = row * self.numColumns + column
-                                if imageIndexInList >= newImagesList.count {
-                                    break
-                                }
-                                
-                                let newImage = newImagesList[imageIndexInList]
-                                newImagesGrid[row].append(newImage)
-                            }
-                        }
-                        
-                        DispatchQueue.main.async {
-                            self.userData.images.removeAll()
-                            self.userData.images.append(contentsOf: newImagesGrid)
-                        }
-                    }
+                    self.viewModel.userDidSearch(query: self.userQuery)
                 })
                     .padding()
                 
-                List (self.userData.images, id: \.self){ imageRow in
+                List (viewModel.images, id: \.self){ imageRow in
                     HStack {
                         Spacer()
                         ForEach(imageRow) { image in
@@ -70,7 +47,6 @@ struct ImageList: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ImageList()
-            .environmentObject(UserData())
+        ImageList(viewModel: ImageListViewModel())
     }
 }

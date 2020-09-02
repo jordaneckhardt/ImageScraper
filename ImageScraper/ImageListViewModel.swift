@@ -9,19 +9,18 @@
 import UIKit
 
 class ImageListViewModel : ObservableObject, Identifiable {
-    let numColumns: Int = Int(UIScreen.main.bounds.width / 120)
     @Published var images = [[IdentifiableImage]]()
 
     func userDidSearch(query: String) {
         DispatchQueue.global(qos: .background).async {
             let newImagesList = scrape(query: query)
-            let numRows: Int = Int(ceil(Double(newImagesList.count) / Double(self.numColumns)))
+            let numRows: Int = Int(ceil(Double(newImagesList.count) / Double(ViewConstants.numColumns)))
             
             var newImagesGrid = [[IdentifiableImage]]()
             for row in 0..<numRows {
                 newImagesGrid.append([IdentifiableImage]())
-                for column in 0..<self.numColumns {
-                    let imageIndexInList = row * self.numColumns + column
+                for column in 0..<ViewConstants.numColumns {
+                    let imageIndexInList = row * ViewConstants.numColumns + column
                     if imageIndexInList >= newImagesList.count {
                         break
                     }

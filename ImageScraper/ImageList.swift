@@ -43,22 +43,27 @@ struct ImageList: View {
                     .cornerRadius(10.0)
                 }
                 .padding(.horizontal)
-
                 
-                List (viewModel.images, id: \.self){ imageRow in
+                Spacer()
+                
+                ForEach (viewModel.images, id: \.self){ imageRow in
                     HStack {
-                        Spacer()
-                        ForEach(imageRow) { image in
-                            Image(uiImage: image.image)
-                                .resizable()
-                                .frame(width: 100, height: 100)
-                                .aspectRatio(contentMode: .fit)
-                                .cornerRadius(8)
-                            
+                        ForEach(imageRow, id: \.self) { image in
+                            NavigationLink(destination: ImageDetail(image: image)) {
+                                Image(uiImage: image.image)
+                                    .resizable()
+                                    .frame(width: 100, height: 100)
+                                    .aspectRatio(contentMode: .fit)
+                                    .cornerRadius(8)
+                                
+                            }.buttonStyle(PlainButtonStyle())
                         }
-                        Spacer()
                     }
                 }
+                
+                
+                
+                Spacer()
             }
             .navigationBarTitle("Images")
         }

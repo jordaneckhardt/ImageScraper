@@ -33,28 +33,29 @@ func scrape(query: String) -> [IdentifiableImage] {
 
 
 func getPageSource(link: String) -> String? {
-    guard let myURL = URL(string: link) else {
+    guard let url = URL(string: link) else {
         print("Error: \(link) doesn't seem to be a valid URL")
         return nil
     }
     
     do {
-        let myHTMLString = try String(contentsOf: myURL, encoding: .ascii)
-        return myHTMLString
+        return try String(contentsOf: url, encoding: .ascii)
     } catch let error {
         print("Error: \(error)")
         return nil
     }
 }
 
+// First, this function uses SwiftSoup to isolate the script elements in the web page's source
+// Then, it calls getBase64ImageString() to extract the base64-encoded image data from the script
 func getBase64StringsFromWebPageSource(source: String) -> [String] {
     var base64Strings = [String]()
     
     do {
-        let els: Elements = try SwiftSoup.parse(source).select("script")
-        for e in els.array() {
-            if let element = try? e.html(){
-                if let base64 = getBase64ImageString(html: element) {
+        let scriptElements: Elements = try SwiftSoup.parse(source).select("script")
+        for se in scriptElements.array() {
+            if let scriptElement = try? se.html(){
+                if let base64 = getBase64ImageString(html: scriptElement) {
                     base64Strings.append(base64)
                 }
                 
@@ -63,12 +64,14 @@ func getBase64StringsFromWebPageSource(source: String) -> [String] {
     } catch Exception.Error(_, let message) {
         print(message)
     } catch {
-        print("error")
+        print("Error parsing images from web page's source code")
     }
     
     return base64Strings
 }
 
+// This function uses a regex to extract the base64-image data from a script element
+// In the source for google.com, image data is passed as a parameter to the _setImagesSrc Javascript function
 func getBase64ImageString(html: String) -> String? {
     let pattern = #"\(function\(\)\{var s='data:image\/jpeg;base64,(.*)';var ii=(.*?);_setImagesSrc\(ii,s\);\}\)\(\);"#
     let regex = try? NSRegularExpression(pattern: pattern)

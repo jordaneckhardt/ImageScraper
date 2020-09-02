@@ -35,8 +35,6 @@ struct ImageList: View {
                             }) {
                                 Image(systemName: "xmark.circle.fill")
                             }
-                        } else {
-                            EmptyView()
                         }
                     }
                     .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))

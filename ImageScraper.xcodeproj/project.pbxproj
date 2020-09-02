@@ -18,6 +18,7 @@
 		727CE6D324FED0560048E372 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 727CE6D224FED0560048E372 /* Podfile */; };
 		72C79CCB24FED8BC00635191 /* ImageDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C79CCA24FED8BC00635191 /* ImageDecoder.swift */; };
 		72C79CCF24FEE19700635191 /* IdentifiableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C79CCE24FEE19700635191 /* IdentifiableImage.swift */; };
+		72C79CD124FF1BC000635191 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C79CD024FF1BC000635191 /* UserData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		727CE6D224FED0560048E372 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		72C79CCA24FED8BC00635191 /* ImageDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDecoder.swift; sourceTree = "<group>"; };
 		72C79CCE24FEE19700635191 /* IdentifiableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableImage.swift; sourceTree = "<group>"; };
+		72C79CD024FF1BC000635191 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		9BEA30F59287807B747B8383 /* Pods-ImageScraper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageScraper.debug.xcconfig"; path = "Target Support Files/Pods-ImageScraper/Pods-ImageScraper.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,6 +101,7 @@
 				727CE6D024FECF950048E372 /* Scraper.swift */,
 				72C79CCA24FED8BC00635191 /* ImageDecoder.swift */,
 				72C79CCE24FEE19700635191 /* IdentifiableImage.swift */,
+				72C79CD024FF1BC000635191 /* UserData.swift */,
 			);
 			path = ImageScraper;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 			files = (
 				727CE6D124FECF950048E372 /* Scraper.swift in Sources */,
 				727CE6BB24FEA0ED0048E372 /* AppDelegate.swift in Sources */,
+				72C79CD124FF1BC000635191 /* UserData.swift in Sources */,
 				72C79CCB24FED8BC00635191 /* ImageDecoder.swift in Sources */,
 				727CE6BD24FEA0ED0048E372 /* SceneDelegate.swift in Sources */,
 				727CE6BF24FEA0ED0048E372 /* ContentView.swift in Sources */,

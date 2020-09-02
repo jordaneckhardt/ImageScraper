@@ -9,25 +9,36 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var query = ""
+    @State public var userQuery = ""
+    @EnvironmentObject var userData: UserData
     
     var body: some View {
         NavigationView {
             VStack {
-                TextField("Search", text: $query)
+                TextField("Search", text: $userQuery, onCommit: {
+                    DispatchQueue.global(qos: .background).async {
+                        print("Scraping for new images")
+                        
+                        let newImages = scrape(query: self.userQuery)
+                        
+                        DispatchQueue.main.async {
+                            print("Updating UI after updating images")
+                            self.userData.images.removeAll()
+                            self.userData.images.append(contentsOf: newImages)
+                            
+                        }
+                    }
+                    
+                    
+                })
                     .padding()
                 
-                List (images) { image in
+                List (userData.images) { image in
                     Image(uiImage: image.image)
                         .resizable()
-                        .aspectRatio(contentMode: .fill)
+                        .aspectRatio(contentMode: .fit)
                         .cornerRadius(25)
-                    
-                    
-                    
                 }
-                .listStyle(PlainListStyle())
-                
             }
             .navigationBarTitle("Images")
         }
@@ -37,5 +48,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(UserData())
     }
 }

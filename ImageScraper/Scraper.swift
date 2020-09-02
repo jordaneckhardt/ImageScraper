@@ -9,13 +9,13 @@
 import UIKit
 import SwiftSoup
 
-//let base64Strings: [String] = scrape()
-let images: [IdentifiableImage] = scrape()
-
-func scrape() -> [IdentifiableImage] {
+func scrape(query: String) -> [IdentifiableImage] {
     var images = [IdentifiableImage]()
     
-    let webPageSource = getPageSource(link: "https://www.google.ca/search?q=google+images+dog")
+    let urlQuery = query.replacingOccurrences(of: " ", with: "+")
+    let url = "https://www.google.ca/search?q=google+images+" + urlQuery
+
+    let webPageSource = getPageSource(link: url)
     
     if let nonNullSource = webPageSource {
         let base64Strings = getBase64StringsFromWebPageSource(source: nonNullSource)

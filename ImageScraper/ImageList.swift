@@ -20,10 +20,32 @@ struct ImageList: View {
     var body: some View {
         NavigationView {
             VStack {
-                TextField("Search", text: $userQuery, onCommit: {
-                    self.viewModel.userDidSearch(query: self.userQuery)
-                })
-                    .padding()
+                HStack {
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                        
+                        TextField("Search", text: $userQuery, onCommit: {
+                            self.viewModel.userDidSearch(query: self.userQuery)
+                        })
+                            .foregroundColor(.primary)
+                        
+                        if !userQuery.isEmpty {
+                            Button(action: {
+                                self.userQuery = ""
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                            }
+                        } else {
+                            EmptyView()
+                        }
+                    }
+                    .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                    .foregroundColor(.secondary)
+                    .background(Color(.secondarySystemBackground))
+                    .cornerRadius(10.0)
+                }
+                .padding(.horizontal)
+
                 
                 List (viewModel.images, id: \.self){ imageRow in
                     HStack {

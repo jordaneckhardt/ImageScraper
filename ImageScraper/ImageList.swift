@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ImageList: View {
     @State public var userQuery = ""
-    @EnvironmentObject var userData: ImageData
+    @EnvironmentObject var userData: UserData
     
     var body: some View {
         NavigationView {
@@ -33,8 +33,9 @@ struct ImageList: View {
                 List (userData.images) { image in
                     Image(uiImage: image.image)
                         .resizable()
+                        .frame(width: 100, height: 100)
                         .aspectRatio(contentMode: .fit)
-                        .cornerRadius(25)
+                        .cornerRadius(8)
                 }
             }
             .navigationBarTitle("Images")
@@ -45,6 +46,6 @@ struct ImageList: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ImageList()
-            .environmentObject(ImageData())
+            .environmentObject(UserData())
     }
 }

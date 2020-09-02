@@ -9,6 +9,6 @@
 import SwiftUI
 import Combine
 
-final class ImageData : ObservableObject {
+final class UserData : ObservableObject {
     @Published var images = [IdentifiableImage]()
 }
